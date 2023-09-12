@@ -1,5 +1,4 @@
-import tkinter
-from tkinter import *
+import tkinter as tk
 
 
 def checking_for_an_integer(c):
@@ -23,30 +22,31 @@ class Calculator:
         self.equally = False
 
     def create_interface(self):
-        entry_widget_calc = Entry(self.main_window, textvariable=self.text_entry_widget_calc, justify=RIGHT,
-                                  selectbackground="#f3f3f3", font="Segoe 15 bold", selectforeground="#000000",
-                                  readonlybackground="#f3f3f3", relief=FLAT, state="readonly")
-        entry_widget_calc.pack(pady=5, anchor=N, padx=6, fill=X)
-        calculated_lbl = Label(self.main_window, textvariable=self.text_label_widget_calc, anchor=E, bg="#f3f3f3",
-                               relief=FLAT, bd=0, font="Segoe 9 bold")
-        calculated_lbl.pack(pady=0, anchor=N, padx=6, fill=X)
+        entry_widget_calc = tk.Entry(self.main_window, textvariable=self.text_entry_widget_calc, justify=tk.RIGHT,
+                                     selectbackground="#f3f3f3", font="Segoe 15 bold", selectforeground="#000000",
+                                     readonlybackground="#f3f3f3", relief=tk.FLAT, state="readonly")
+        entry_widget_calc.pack(pady=5, anchor=tk.N, padx=6, fill=tk.X)
+        calculated_lbl = tk.Label(self.main_window, textvariable=self.text_label_widget_calc, anchor=tk.E, bg="#f3f3f3",
+                                  relief=tk.FLAT, bd=0, font="Segoe 9 bold")
+        calculated_lbl.pack(pady=0, anchor=tk.N, padx=6, fill=tk.X)
+
+        button_styles = {
+            "numbers": {"bg": "#FFFFFF", "foreground": "#010100", "font": "Calibri 15", "width": 10, "height": 2},
+            "operators": {"bg": "#f9f9f9", "foreground": "#010100", "font": "Calibri 15", "width": 10, "height": 2},
+            "equals": {"bg": "#363533", "foreground": "#ffffff", "font": "Calibri 15", "width": 10, "height": 2}
+        }
+
         for i in range(5):
-            frame = Frame(self.main_window, bg="#f3f3f3")
+            frame = tk.Frame(self.main_window, bg="#f3f3f3")
             for j in range(4):
-                if self.buttons[i][j] in "1234567890":
-                    bg = "#FFFFFF"
-                    fd = "#010100"
-                elif self.buttons[i][j] in "=":
-                    bg = "#363533"
-                    fd = "#ffffff"
-                else:
-                    bg = "#f9f9f9"
-                    fd = "#010100"
-                Button(master=frame,
-                       text=f"{self.buttons[i][j]}", command=lambda key=self.buttons[i][j]: self.entering_values(key),
-                       font="Calibri 15", bg=bg, foreground=fd, width=10, height=2, relief=FLAT, bd=0, padx=1) \
-                    .pack(side=LEFT, padx=1, pady=1, fill=BOTH)
-            frame.pack(side=TOP, anchor=NW, padx=5, fill=BOTH)
+                key = self.buttons[i][j]
+                style = button_styles["numbers"] if key.isdigit() else (
+                    button_styles["equals"] if key == "=" else button_styles["operators"]
+                )
+
+                tk.Button(master=frame, text=key, command=lambda k=key: self.entering_values(k), relief=tk.FLAT, bd=0,
+                          padx=1, **style).pack(side=tk.LEFT, padx=1, pady=1, fill=tk.BOTH)
+            frame.pack(side=tk.TOP, anchor=tk.NW, padx=5, fill=tk.BOTH)
 
     def enter_numbers(self, key):
         if self.equally:
@@ -178,7 +178,7 @@ class Calculator:
 
 
 if __name__ == "__main__":
-    root = tkinter.Tk()
+    root = tk.Tk()
     root.title("Calculator")
     root.geometry("443x405")
     root.resizable(0, 0)
