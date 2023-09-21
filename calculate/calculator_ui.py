@@ -8,7 +8,7 @@ class CalculatorUI:
     def __init__(self, root):
         self.root = root
         self.root.title("Calculator")
-        self.root.geometry("443x405")
+        self.root.geometry("443x385")
         self.root.resizable(0, 0)
         self.root.configure(background="#f3f3f3")
         self.calculator_logic = CalculatorLogic(self)
